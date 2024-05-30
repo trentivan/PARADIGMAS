@@ -5,7 +5,7 @@
 ## Juego snake en  C con Raylib
 
 ## Instrucciones
-crearel juego de Snake en C siguiendo los siguientes pasos:
+crear el juego de Snake en C siguiendo los siguientes pasos:
 - Listas enlazadas
 - No usar variables globales
 - No usar codigo espagueti
