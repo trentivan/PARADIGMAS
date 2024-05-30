@@ -56,20 +56,20 @@ int main(void)
     InicializarJuego(&juego);
     SetTargetFPS(60);
 
-    // Bucle principal del juego
-    while (!WindowShouldClose())    // Detectar el botón de cierre de la ventana o la tecla ESC
+    // bucle principal del juego
+    while (!WindowShouldClose()) // detecta el boton de cierre de la ventana o la tecla ESC
     {
         ActualizarDibujoFrame(&juego);
     }
 
-    // Libera memoria antes de cerrar el juego
+    // libera memoria antes de cerrar el juego
     LiberarSerpiente(&(juego.serpiente));
     CloseWindow();
 
     return 0;
 }
 
-// Inicializa las variables del juego
+// inicializa las variables del juego
 void InicializarJuego(Juego* juego)
 {
     juego->contadorFrames = 0;
@@ -78,13 +78,13 @@ void InicializarJuego(Juego* juego)
     juego->offset.x = juego->anchoPantalla % TAMANO_CUADRADO;
     juego->offset.y = juego->altoPantalla % TAMANO_CUADRADO;
 
-    // Inicializa la serpiente
+    // inicializa la serpiente
     juego->serpiente.cabeza = CrearNodo((Vector2){ juego->offset.x / 2, juego->offset.y / 2 }, (Vector2){ TAMANO_CUADRADO, 0 });
     juego->serpiente.cola = juego->serpiente.cabeza;
     juego->serpiente.colorCabeza = DARKBLUE;
     juego->serpiente.colorCuerpo = BLUE;
 
-    // Inicializa la comida
+    // inicializa la comida
     juego->fruta.tamano = (Vector2){ TAMANO_CUADRADO, TAMANO_CUADRADO };
     juego->fruta.color = SKYBLUE;
     juego->fruta.activa = false;
@@ -129,12 +129,12 @@ void LiberarSerpiente(Serpiente* serpiente)
     serpiente->cola = NULL;
 }
 
-// Actualiza el juego
+// actualiza el juego
 void ActualizarJuego(Juego* juego)
 {
     if (!(juego->juegoTerminado))
     {
-        // Control del jugador
+        // control del jugador
         if (IsKeyPressed(KEY_RIGHT) && (juego->serpiente.cabeza->velocidad.x == 0))
         {
             juego->serpiente.cabeza->velocidad = (Vector2){ TAMANO_CUADRADO, 0 };
@@ -152,7 +152,7 @@ void ActualizarJuego(Juego* juego)
             juego->serpiente.cabeza->velocidad = (Vector2){ 0, TAMANO_CUADRADO };
         }
 
-        // Movimiento de la serpiente
+        // movimiento de la serpiente
         if ((juego->contadorFrames % 5) == 0)
         {
             Nodo* actual = juego->serpiente.cabeza;
@@ -171,7 +171,7 @@ void ActualizarJuego(Juego* juego)
             }
         }
 
-        // Colisión con los límites de la matriz
+        // colision con los limites de la matriz
         if ((juego->serpiente.cabeza->posicion.x >= (juego->anchoPantalla - juego->offset.x)) ||
             (juego->serpiente.cabeza->posicion.y >= (juego->altoPantalla - juego->offset.y)) ||
             (juego->serpiente.cabeza->posicion.x < 0) || (juego->serpiente.cabeza->posicion.y < 0))
@@ -179,7 +179,7 @@ void ActualizarJuego(Juego* juego)
             juego->juegoTerminado = true;
         }
 
-        // Colisión con la cola de la serpiente
+        // colision con la cola de la serpiente
         Nodo* actual = juego->serpiente.cabeza->siguiente;
         while (actual != NULL)
         {
@@ -190,7 +190,7 @@ void ActualizarJuego(Juego* juego)
             actual = actual->siguiente;
         }
         
-        // Colisión de la cabeza de la serpiente con la comida
+        // colision de la cabeza de la serpiente con la comida
         if ((juego->serpiente.cabeza->posicion.x < (juego->fruta.posicion.x + juego->fruta.tamano.x) && (juego->serpiente.cabeza->posicion.x + TAMANO_CUADRADO) > juego->fruta.posicion.x) &&
             (juego->serpiente.cabeza->posicion.y < (juego->fruta.posicion.y + juego->fruta.tamano.y) && (juego->serpiente.cabeza->posicion.y + TAMANO_CUADRADO) > juego->fruta.posicion.y))
         {
@@ -198,7 +198,7 @@ void ActualizarJuego(Juego* juego)
             juego->fruta.activa = false;
         }
 
-        // Posición de la fruta
+        // posicion de la fruta
         if (!(juego->fruta.activa))
         {
             juego->fruta.activa = true;
@@ -222,7 +222,7 @@ void ActualizarJuego(Juego* juego)
     {
         if (IsKeyPressed(KEY_ENTER))
         {
-            LiberarSerpiente(&(juego->serpiente)); // Libera la memoria de la serpiente antes de reiniciar el juego
+            LiberarSerpiente(&(juego->serpiente)); // libera la memoria de la serpiente antes de reiniciar el juego
             InicializarJuego(juego);
             juego->juegoTerminado = false;
         }
@@ -230,7 +230,7 @@ void ActualizarJuego(Juego* juego)
 }
 
 
-// Dibuja el juego
+// dibuja el juego
 void DibujarJuego(const Juego* juego)
 {
     BeginDrawing();
@@ -239,7 +239,7 @@ void DibujarJuego(const Juego* juego)
 
     if (!(juego->juegoTerminado))
     {
-        // Dibuja la matriz
+        // dibuja la matriz
         for (int i = 0; i < juego->anchoPantalla / TAMANO_CUADRADO + 1; i++)
         {
             DrawLineV((Vector2){ TAMANO_CUADRADO * i + juego->offset.x / 2, juego->offset.y / 2 }, (Vector2){ TAMANO_CUADRADO * i + juego->offset.x / 2, juego->altoPantalla - juego->offset.y / 2 }, LIGHTGRAY);
@@ -250,7 +250,7 @@ void DibujarJuego(const Juego* juego)
             DrawLineV((Vector2){ juego->offset.x / 2, TAMANO_CUADRADO * i + juego->offset.y / 2 }, (Vector2){ juego->anchoPantalla - juego->offset.x / 2, TAMANO_CUADRADO * i + juego->offset.y / 2 }, LIGHTGRAY);
         }
 
-        // Dibuja la serpiente
+        // dibuja la serpiente
         Nodo* actual = juego->serpiente.cabeza;
         while (actual != NULL)
         {
@@ -258,19 +258,19 @@ void DibujarJuego(const Juego* juego)
             actual = actual->siguiente;
         }
 
-        // Dibuja la comida
+        // dibuja la comida
         DrawRectangleV(juego->fruta.posicion, juego->fruta.tamano, juego->fruta.color);
     }
     else 
     {
-        DrawText("PRESIONA [ENTER] PARA JUGAR DE NUEVO", GetScreenWidth() / 2 - MeasureText("PRESIONA [ENTER] PARA JUGAR DE NUEVO", 20) / 2, GetScreenHeight() / 2 - 50, 20, GRAY);
+        DrawText("PRESIONA [ENTER] PARA JUGAR DE NUEVO O ESC PARA CERRAR EL JUEGO", GetScreenWidth() / 2 - MeasureText("PRESIONA [ENTER] PARA JUGAR DE NUEVO O ESC PARA CERRAR EL JUEGO", 20) / 2, GetScreenHeight() / 2 - 50, 20, GRAY);
     }
 
     EndDrawing();
 }
 
 
-// Actualiza y dibujar (un frame)
+// actualiza y dibuja el juego
 void ActualizarDibujoFrame(Juego* juego)
 {
     ActualizarJuego(juego);
