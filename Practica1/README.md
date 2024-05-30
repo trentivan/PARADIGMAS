@@ -4,6 +4,14 @@
 
 ## Juego snake en  C con Raylib
 
+## Para compilar el programa se debe de ejecutar el siguiente comando
+```bash
+mingw32-make.exe 
+./Game.exe
+```
+Todo esto desde la direccion donde se encuentra el archivo Makefile
+Practica1/Graficos/cualquier/build
+
 ## Instrucciones
 crear el juego de Snake en C siguiendo los siguientes pasos:
 - Listas enlazadas
