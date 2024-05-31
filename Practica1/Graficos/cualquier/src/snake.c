@@ -3,7 +3,7 @@
 
 #define TAMANO_CUADRADO 40
 
-// Estructuras
+// structuras
 typedef struct Nodo {
     Vector2 posicion;
     Vector2 velocidad;
