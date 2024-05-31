@@ -1,5 +1,3 @@
-{!portada.pdf!}
-
 # Reporte Practica 4 Paradigmas de la programacion
 
 ## Hernandez Ceseña Ivan Fernando
